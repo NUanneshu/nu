@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NU — Urban Natural System</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink:       #1A1916;
+  --warm:      #2E2B26;
+  --mid:       #6B6560;
+  --stone:     #9E9890;
+  --bone:      #D8D0C4;
+  --parchment: #EDE8E0;
+  --offwhite:  #F7F4EF;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'Karla', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--offwhite);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 56px; height: 60px;
+  border-bottom: 1px solid rgba(26,25,22,0.1);
+  background: rgba(247,244,239,0.94);
+  backdrop-filter: blur(8px);
+}
+.nav-logo {
+  font-family: var(--serif); font-weight: 400;
+  font-size: 20px; letter-spacing: 0.5em; color: var(--ink);
+}
+.nav-right { display: flex; align-items: center; gap: 48px; }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  text-decoration: none; font-size: 11px; font-weight: 400;
+  letter-spacing: 0.2em; color: var(--mid); text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--offwhite); background: var(--ink);
+  padding: 10px 24px; text-decoration: none; transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--warm); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh; padding-top: 60px;
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.hero-left {
+  background: var(--ink);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 80px 72px 88px; position: relative; overflow: hidden;
+}
+.hero-left::after {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 1px; height: 100%;
+  background: rgba(214,208,196,0.12);
+}
+.hero-year {
+  position: absolute; top: 80px; right: 52px;
+  font-size: 10px; letter-spacing: 0.25em; color: rgba(214,208,196,0.3);
+  text-transform: uppercase; writing-mode: vertical-rl;
+}
+.hero-index {
+  font-size: 11px; letter-spacing: 0.22em; color: var(--stone);
+  text-transform: uppercase; margin-bottom: 40px;
+}
+.hero-title {
+  font-family: var(--serif); font-weight: 400;
+  font-size: 80px; line-height: 0.95;
+  color: var(--offwhite); margin-bottom: 48px;
+  letter-spacing: -0.02em;
+}
+.hero-title em { font-style: italic; color: var(--bone); display: block; }
+.hero-rule { width: 40px; height: 1px; background: var(--stone); margin-bottom: 32px; }
+.hero-sub {
+  font-size: 13px; font-weight: 300; color: var(--stone);
+  max-width: 340px; line-height: 1.9; margin-bottom: 56px;
+  letter-spacing: 0.02em;
+}
+.btn-ghost {
+  display: inline-block; border: 1px solid rgba(214,208,196,0.35);
+  color: var(--bone); font-size: 11px; letter-spacing: 0.22em;
+  text-transform: uppercase; padding: 14px 36px; text-decoration: none;
+  transition: all 0.25s; width: fit-content;
+}
+.btn-ghost:hover { border-color: var(--bone); color: var(--offwhite); }
+
+.hero-right {
+  background: var(--parchment);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+/*
+  ★★ 替换 Hero 右侧大图 ★★
+  将 .hero-img-ph 整块删掉，改为：
+  <img src="hero.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;">
+  建议：900 × 1100 px，人物穿搭，中性/深色背景，自然光
+*/
+.hero-img-ph {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 14px;
+  text-align: center;
+}
+.ph-tag {
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--stone); border: 1px solid var(--bone); padding: 6px 18px;
+}
+.ph-size { font-size: 11px; color: var(--mid); letter-spacing: 0.1em; }
+.ph-hint { font-size: 11px; color: var(--stone); letter-spacing: 0.05em; line-height: 1.8; }
+
+/* ─── STATEMENT ─── */
+.statement {
+  border-top: 1px solid rgba(26,25,22,0.1);
+  border-bottom: 1px solid rgba(26,25,22,0.1);
+  padding: 120px 72px;
+  display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start;
+}
+.statement-label {
+  font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--stone); padding-top: 10px;
+}
+.statement-text {
+  font-family: var(--serif); font-size: 36px; font-weight: 400;
+  line-height: 1.35; color: var(--ink); margin-bottom: 40px;
+  letter-spacing: -0.01em;
+}
+.statement-text em { font-style: italic; }
+.statement-sub {
+  font-size: 14px; font-weight: 300; color: var(--mid);
+  max-width: 560px; line-height: 1.9;
+}
+
+/* ─── VALUES ─── */
+.values {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid rgba(26,25,22,0.1);
+}
+.value-item {
+  padding: 52px 40px;
+  border-right: 1px solid rgba(26,25,22,0.1);
+}
+.value-item:last-child { border-right: none; }
+.value-n {
+  font-size: 10px; letter-spacing: 0.22em; color: var(--stone);
+  text-transform: uppercase; margin-bottom: 20px; display: block;
+}
+.value-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 10px; }
+.value-desc { font-size: 13px; font-weight: 300; color: var(--mid); line-height: 1.75; }
+
+/* ─── PRODUCTS ─── */
+.products-header {
+  padding: 100px 72px 64px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  border-bottom: 1px solid rgba(26,25,22,0.1);
+}
+.products-title {
+  font-family: var(--serif); font-size: 48px; font-weight: 400;
+  color: var(--ink); letter-spacing: -0.02em;
+}
+.products-note {
+  font-size: 12px; font-weight: 300; color: var(--mid);
+  text-align: right; line-height: 1.9;
+}
+.products-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid rgba(26,25,22,0.1);
+}
+.product-card { border-right: 1px solid rgba(26,25,22,0.1); overflow: hidden; }
+.product-card:last-child { border-right: none; }
+
+.product-img {
+  height: 480px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.product-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.7s ease;
+}
+.product-card:hover .product-img img { transform: scale(1.04); }
+
+/*
+  ★★ 产品图替换说明（三张）★★
+  找到对应 .prod-ph 块，整块删掉，
+  改为：<img src="product-0X.jpg" alt="产品名称">
+  建议尺寸：700 × 900 px（7:9 竖版）
+  风格：纯色/浅色背景，产品平铺或模特穿着，统一调性
+*/
+.prod-ph {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+}
+.prod-ph .ph-tag { margin-bottom: 4px; }
+
+.product-info { padding: 32px 36px 40px; border-top: 1px solid rgba(26,25,22,0.1); }
+.product-cat {
+  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--stone); margin-bottom: 12px;
+}
+.product-name {
+  font-family: var(--serif); font-size: 22px; font-weight: 400;
+  color: var(--ink); margin-bottom: 10px; letter-spacing: -0.01em;
+}
+.product-desc {
+  font-size: 13px; font-weight: 300; color: var(--mid);
+  line-height: 1.8; margin-bottom: 24px;
+}
+.product-foot { display: flex; align-items: center; justify-content: space-between; }
+.product-price { font-size: 15px; font-weight: 500; color: var(--ink); }
+.product-material {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--stone); border: 1px solid var(--bone); padding: 4px 12px;
+}
+
+/* ─── FABRIC ─── */
+.fabric-section { background: var(--ink); padding: 120px 72px; }
+.fabric-header {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  align-items: end; margin-bottom: 72px;
+}
+.fabric-label {
+  font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--stone); margin-bottom: 24px; display: block;
+}
+.fabric-title {
+  font-family: var(--serif); font-size: 48px; font-weight: 400;
+  color: var(--offwhite); line-height: 1.1; letter-spacing: -0.02em;
+}
+.fabric-title em { font-style: italic; color: var(--bone); }
+.fabric-intro {
+  font-size: 13px; font-weight: 300; color: var(--stone);
+  line-height: 1.95; max-width: 440px; align-self: end;
+}
+
+.fabric-textures {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-bottom: 72px;
+}
+.texture-cell { height: 200px; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
+.tx-cotton { background: repeating-linear-gradient(90deg,rgba(214,208,196,.07) 0,rgba(214,208,196,.07) 1px,transparent 1px,transparent 12px),repeating-linear-gradient(0deg,rgba(214,208,196,.07) 0,rgba(214,208,196,.07) 1px,transparent 1px,transparent 12px),#252420; }
+.tx-linen  { background: repeating-linear-gradient(15deg,rgba(214,208,196,.06) 0,rgba(214,208,196,.06) 1px,transparent 1px,transparent 8px),repeating-linear-gradient(-75deg,rgba(214,208,196,.06) 0,rgba(214,208,196,.06) 1px,transparent 1px,transparent 8px),#2A2721; }
+.tx-wool   { background: radial-gradient(circle at 30% 40%,rgba(158,152,144,.15) 0,transparent 60%),radial-gradient(circle at 70% 70%,rgba(158,152,144,.1) 0,transparent 50%),repeating-linear-gradient(45deg,rgba(214,208,196,.04) 0,rgba(214,208,196,.04) 1px,transparent 1px,transparent 6px),#222019; }
+.tx-blend  { background: repeating-linear-gradient(30deg,rgba(214,208,196,.06) 0,rgba(214,208,196,.06) 1px,transparent 1px,transparent 10px),repeating-linear-gradient(-30deg,rgba(214,208,196,.04) 0,rgba(214,208,196,.04) 1px,transparent 1px,transparent 10px),#201F1C; }
+.texture-label {
+  position: relative; z-index: 1; padding: 14px 20px; width: 100%;
+  border-top: 1px solid rgba(214,208,196,0.12);
+}
+.tx-name { font-size: 13px; color: var(--bone); display: block; margin-bottom: 3px; }
+.tx-en { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); }
+
+.fabric-specs {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(214,208,196,0.1); padding-top: 56px;
+}
+.spec-item { padding: 0 0 0 36px; border-left: 1px solid rgba(214,208,196,0.1); }
+.spec-item:first-child { padding-left: 0; border-left: none; }
+.spec-num {
+  font-family: var(--serif); font-size: 52px; font-weight: 400;
+  color: var(--offwhite); line-height: 1; margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.spec-unit { font-size: 18px; color: var(--stone); }
+.spec-label {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--stone); margin-bottom: 8px;
+}
+.spec-desc { font-size: 12px; font-weight: 300; color: rgba(158,152,144,0.65); line-height: 1.75; }
+
+/* ─── SCENARIO ─── */
+.scenario-section { padding: 120px 72px; }
+.scenario-header {
+  display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 72px;
+}
+.scenario-title {
+  font-family: var(--serif); font-size: 48px; font-weight: 400;
+  color: var(--ink); letter-spacing: -0.02em;
+}
+.scenario-sub {
+  font-size: 13px; font-weight: 300; color: var(--mid);
+  max-width: 300px; text-align: right; line-height: 1.8;
+}
+.scenario-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+.scenario-card { overflow: hidden; }
+.scenario-img {
+  height: 500px; position: relative; overflow: hidden;
+  display: flex; align-items: flex-end;
+}
+.scenario-img img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.7s ease;
+}
+.scenario-card:hover .scenario-img img { transform: scale(1.04); }
+/*
+  ★★ 场景图替换（四张）★★
+  找到对应 .scene-ph，整块删掉，
+  改为：<img src="scene-0X.jpg">
+  建议尺寸：600 × 780 px，统一色调，自然光
+*/
+.scene-ph {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+}
+.scene-ph-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--stone); text-align: center; line-height: 2; }
+.scene-ph-size { font-size: 10px; color: var(--bone); border: 1px dashed var(--bone); padding: 4px 12px; }
+.sc-1 { background: #D4CFC8; }
+.sc-2 { background: #C8C4BC; }
+.sc-3 { background: #BEBAB1; }
+.sc-4 { background: #B4B0A8; }
+.scenario-info {
+  padding: 22px 24px 26px;
+  border-top: 1px solid rgba(26,25,22,0.1);
+  background: var(--offwhite);
+}
+.scene-num { font-size: 10px; letter-spacing: 0.25em; color: var(--stone); text-transform: uppercase; margin-bottom: 6px; }
+.scene-name { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 5px; }
+.scene-desc { font-size: 12px; font-weight: 300; color: var(--mid); line-height: 1.75; }
+
+/* ─── PHILOSOPHY ─── */
+.philosophy {
+  background: var(--parchment); padding: 120px 72px;
+  border-top: 1px solid rgba(26,25,22,0.1);
+}
+.philosophy-grid { display: grid; grid-template-columns: 280px 1fr; gap: 100px; }
+.philosophy-aside-label {
+  font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--stone); display: block; margin-bottom: 32px;
+}
+.philosophy-aside-quote {
+  font-family: var(--serif); font-size: 22px; font-weight: 400; font-style: italic;
+  color: var(--mid); line-height: 1.55;
+}
+.pillar {
+  padding: 44px 0; border-bottom: 1px solid rgba(26,25,22,0.1);
+  display: grid; grid-template-columns: 200px 1fr; gap: 60px; align-items: start;
+}
+.pillar:first-child { border-top: 1px solid rgba(26,25,22,0.1); }
+.pillar-n { font-size: 10px; letter-spacing: 0.22em; color: var(--stone); text-transform: uppercase; padding-top: 5px; }
+.pillar-title {
+  font-family: var(--serif); font-size: 24px; font-weight: 400;
+  color: var(--ink); margin-bottom: 14px;
+}
+.pillar-body { font-size: 14px; font-weight: 300; color: var(--mid); line-height: 1.9; }
+
+/* ─── FOOTER ─── */
+footer { background: var(--ink); padding: 80px 72px 64px; }
+.footer-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding-bottom: 56px; border-bottom: 1px solid rgba(214,208,196,0.1); margin-bottom: 36px;
+}
+.footer-logo {
+  font-family: var(--serif); font-size: 36px; font-weight: 400;
+  letter-spacing: 0.5em; color: var(--offwhite); display: block; margin-bottom: 10px;
+}
+.footer-tagline { font-size: 11px; letter-spacing: 0.15em; color: var(--stone); text-transform: uppercase; }
+.footer-links { display: flex; gap: 48px; list-style: none; padding-top: 8px; }
+.footer-links a {
+  font-size: 11px; letter-spacing: 0.18em; color: var(--stone);
+  text-decoration: none; text-transform: uppercase; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--offwhite); }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; }
+.footer-copy { font-size: 11px; color: rgba(158,152,144,0.45); letter-spacing: 0.1em; }
+.footer-note { font-size: 11px; color: rgba(158,152,144,0.45); letter-spacing: 0.05em; }
+
+/* ─── REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">NU</span>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#statement">理念</a></li>
+      <li><a href="#products">系列</a></li>
+      <li><a href="#fabric">面料</a></li>
+      <li><a href="#scenario">场景</a></li>
+    </ul>
+    <a href="#products" class="nav-cta">探索系列</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-year">2024 — 2025</span>
+    <span class="hero-index">Urban Natural System</span>
+    <h1 class="hero-title">每日<br><em>接触</em><br>自然</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">接触自然不应该是周末活动，<br>而应是每日的状态。<br>NU 为城市工作者设计可以<br>日常穿着的自然连接系统。</p>
+    <a href="#products" class="btn-ghost">探索系列 →</a>
+  </div>
+  <div class="hero-right">
+    <!--
+      ★★ 替换 Hero 大图 ★★
+      删除下方 <div class="hero-img-ph">，改为：
+      <img src="hero.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;">
+      建议：900 × 1100 px，人物穿搭，中性背景，自然光
+    -->
+    <div class="hero-img-ph">
+      <div class="ph-tag">Hero 大图</div>
+      <div class="ph-size">建议尺寸：900 × 1100 px</div>
+      <div class="ph-hint">人物穿搭 / 面料特写<br>中性背景 · 自然光线</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section class="statement" id="statement">
+  <div class="reveal"><span class="statement-label">Brand Statement</span></div>
+  <div class="reveal d1">
+    <p class="statement-text">都市人不是缺乏自然，<br>而是丧失了<em>感知碎片化自然</em>的能力。</p>
+    <p class="statement-sub">NU 重新定义服装的角色——它不只是覆盖物，而是连接感官的媒介。通过自然材质与极简剪裁，让服装成为你与城市环境之间持续的对话。</p>
+  </div>
+</section>
+
+<!-- VALUES -->
+<div class="values">
+  <div class="value-item reveal"><span class="value-n">— 01</span><p class="value-title">自然材质优先</p><p class="value-desc">棉、亚麻、羊毛、混纺天然纤维，拒绝合成替代。</p></div>
+  <div class="value-item reveal d1"><span class="value-n">— 02</span><p class="value-title">克制的设计语言</p><p class="value-desc">去除多余装饰，以材质本身作为唯一的视觉语言。</p></div>
+  <div class="value-item reveal d2"><span class="value-n">— 03</span><p class="value-title">场景无缝切换</p><p class="value-desc">通勤、公园、轻户外，同一件衣物，零行为成本。</p></div>
+  <div class="value-item reveal d3"><span class="value-n">— 04</span><p class="value-title">即时的自然接触</p><p class="value-desc">碎片日常中完成对自然的感知采样，消解封闭感。</p></div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="products-header reveal">
+    <h2 class="products-title">核心系列</h2>
+    <p class="products-note">通勤 + 轻自然活动融合服装系统<br>¥ 300 — ¥ 900</p>
+  </div>
+  <div class="products-grid">
+
+    <!-- 产品 01 ★ 修改：名称、材质、描述、价格 -->
+    <div class="product-card reveal">
+      <div class="product-img" style="background:#DEDAD3;">
+        <!--
+          ★★ 替换产品图 01 ★★
+          删除 <div class="prod-ph">，改为：
+          <img src="product-01.jpg" alt="城市轻壳外套">
+          建议：700 × 900 px，浅色背景，可平铺或模特图
+        -->
+        <div class="prod-ph">
+          <div class="ph-tag">产品图 01</div>
+          <div class="ph-size">700 × 900 px</div>
+          <div class="ph-hint">城市轻壳外套</div>
+        </div>
+      </div>
+      <div class="product-info">
+        <p class="product-cat">通勤外套</p>
+        <p class="product-name">城市轻壳外套</p>
+        <p class="product-desc">可叠穿版型，亚麻混纺面料自然垂坠，适配通勤与午休绿地，轻量不失结构感。</p>
+        <div class="product-foot">
+          <span class="product-price">¥ 689</span>
+          <span class="product-material">Linen Blend</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 产品 02 ★ 修改：名称、材质、描述、价格 -->
+    <div class="product-card reveal d1">
+      <div class="product-img" style="background:#D4CFC8;">
+        <!--
+          ★★ 替换产品图 02 ★★
+          删除 <div class="prod-ph">，改为：
+          <img src="product-02.jpg" alt="自然感直筒裤">
+        -->
+        <div class="prod-ph">
+          <div class="ph-tag">产品图 02</div>
+          <div class="ph-size">700 × 900 px</div>
+          <div class="ph-hint">自然感直筒裤</div>
+        </div>
+      </div>
+      <div class="product-info">
+        <p class="product-cat">日常裤装</p>
+        <p class="product-name">自然感直筒裤</p>
+        <p class="product-desc">宽松直筒版型，棉质面料久坐不变形，城市与自然场景无缝过渡。</p>
+        <div class="product-foot">
+          <span class="product-price">¥ 459</span>
+          <span class="product-material">100% Cotton</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 产品 03 ★ 修改：名称、材质、描述、价格 -->
+    <div class="product-card reveal d2">
+      <div class="product-img" style="background:#C8C4BC;">
+        <!--
+          ★★ 替换产品图 03 ★★
+          删除 <div class="prod-ph">，改为：
+          <img src="product-03.jpg" alt="温感羊毛圆领衫">
+        -->
+        <div class="prod-ph">
+          <div class="ph-tag">产品图 03</div>
+          <div class="ph-size">700 × 900 px</div>
+          <div class="ph-hint">温感羊毛圆领衫</div>
+        </div>
+      </div>
+      <div class="product-info">
+        <p class="product-cat">基础针织</p>
+        <p class="product-name">温感羊毛圆领衫</p>
+        <p class="product-desc">美利奴羊毛全日候体感调节，室内外温差从容应对，降低行为切换成本。</p>
+        <div class="product-foot">
+          <span class="product-price">¥ 799</span>
+          <span class="product-material">Merino Wool</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FABRIC -->
+<section class="fabric-section" id="fabric">
+  <div class="fabric-header reveal">
+    <div>
+      <span class="fabric-label">Material System</span>
+      <h2 class="fabric-title">面料即<em>语言</em></h2>
+    </div>
+    <p class="fabric-intro">NU 的每一种面料选择都经过功能验证——不是因为「天然」就好，而是因为它在城市与自然的过渡场景中，能够给身体提供真实的感知反馈。</p>
+  </div>
+  <div class="fabric-textures reveal">
+    <div class="texture-cell tx-cotton"><div class="texture-label"><span class="tx-name">棉</span><span class="tx-en">Cotton</span></div></div>
+    <div class="texture-cell tx-linen"><div class="texture-label"><span class="tx-name">亚麻</span><span class="tx-en">Linen</span></div></div>
+    <div class="texture-cell tx-wool"><div class="texture-label"><span class="tx-name">羊毛</span><span class="tx-en">Merino Wool</span></div></div>
+    <div class="texture-cell tx-blend"><div class="texture-label"><span class="tx-name">混纺</span><span class="tx-en">Natural Blend</span></div></div>
+  </div>
+  <!-- ★ 修改指标数字和描述文字 -->
+  <div class="fabric-specs reveal">
+    <div class="spec-item">
+      <div class="spec-num">100<span class="spec-unit">%</span></div>
+      <p class="spec-label">天然原料占比</p>
+      <p class="spec-desc">所有核心面料<br>拒绝合成纤维混入</p>
+    </div>
+    <div class="spec-item">
+      <div class="spec-num">3<span class="spec-unit">+</span></div>
+      <p class="spec-label">场景适配覆盖</p>
+      <p class="spec-desc">通勤 / 户外 / 休闲<br>单件完成切换</p>
+    </div>
+    <div class="spec-item">
+      <div class="spec-num">4</div>
+      <p class="spec-label">核心材质系统</p>
+      <p class="spec-desc">棉 · 亚麻 · 羊毛 · 混纺<br>季节性能全覆盖</p>
+    </div>
+    <div class="spec-item">
+      <div class="spec-num">0</div>
+      <p class="spec-label">多余装饰</p>
+      <p class="spec-desc">以材质作为唯一<br>设计表达语言</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCENARIO -->
+<section class="scenario-section" id="scenario">
+  <div class="scenario-header reveal">
+    <h2 class="scenario-title">日常场景系统</h2>
+    <p class="scenario-sub">城市与自然之间没有清晰边界，NU 的服装系统为这个过渡地带而设计。</p>
+  </div>
+  <div class="scenario-grid">
+
+    <!-- ★ 四个场景卡片：修改场景名称和描述 -->
+    <div class="scenario-card reveal">
+      <div class="scenario-img sc-1">
+        <!--
+          ★★ 替换场景图 01 ★★
+          删除 <div class="scene-ph">，改为：
+          <img src="scene-01.jpg">
+          建议：600 × 780 px，通勤场景，统一调性
+        -->
+        <div class="scene-ph"><div class="scene-ph-label">场景图 01<br>上班通勤</div><div class="scene-ph-size">600 × 780 px</div></div>
+      </div>
+      <div class="scenario-info">
+        <p class="scene-num">— 01</p>
+        <p class="scene-name">上班通勤</p>
+        <p class="scene-desc">地铁、骑行、步行，保持轻商务外观，无需换装。</p>
+      </div>
+    </div>
+
+    <div class="scenario-card reveal d1">
+      <div class="scenario-img sc-2">
+        <!--
+          ★★ 替换场景图 02 ★★
+          <img src="scene-02.jpg">，午休公园
+        -->
+        <div class="scene-ph"><div class="scene-ph-label">场景图 02<br>午休绿地</div><div class="scene-ph-size">600 × 780 px</div></div>
+      </div>
+      <div class="scenario-info">
+        <p class="scene-num">— 02</p>
+        <p class="scene-name">午休绿地</p>
+        <p class="scene-desc">公司附近公园，同一套衣物，即刻接触自然。</p>
+      </div>
+    </div>
+
+    <div class="scenario-card reveal d2">
+      <div class="scenario-img sc-3">
+        <!--
+          ★★ 替换场景图 03 ★★
+          <img src="scene-03.jpg">，傍晚骑行
+        -->
+        <div class="scene-ph"><div class="scene-ph-label">场景图 03<br>下班骑行</div><div class="scene-ph-size">600 × 780 px</div></div>
+      </div>
+      <div class="scenario-info">
+        <p class="scene-num">— 03</p>
+        <p class="scene-name">下班骑行</p>
+        <p class="scene-desc">感知风与光的变化，从工位自然延伸至户外。</p>
+      </div>
+    </div>
+
+    <div class="scenario-card reveal d3">
+      <div class="scenario-img sc-4">
+        <!--
+          ★★ 替换场景图 04 ★★
+          <img src="scene-04.jpg">，周末公园
+        -->
+        <div class="scene-ph"><div class="scene-ph-label">场景图 04<br>周末公园</div><div class="scene-ph-size">600 × 780 px</div></div>
+      </div>
+      <div class="scenario-info">
+        <p class="scene-num">— 04</p>
+        <p class="scene-name">周末公园</p>
+        <p class="scene-desc">轻徒步与城市绿地，同一套 NU 自然适配。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-grid">
+    <div class="reveal">
+      <span class="philosophy-aside-label">Brand Philosophy</span>
+      <p class="philosophy-aside-quote">"服装是<br>感官与<br>自然之间<br>的桥梁。"</p>
+    </div>
+    <div>
+      <!-- ★ 修改三个理念的标题和正文 -->
+      <div class="pillar reveal">
+        <span class="pillar-n">— 01</span>
+        <div><h3 class="pillar-title">服装是感官的桥梁</h3><p class="pillar-body">NU 重新定义服装的功能——它不只是覆盖身体，而是连接你与外部自然环境的媒介。亚麻的触感、羊毛的温度，让你时刻感知当下的自然状态，而非屏蔽它。</p></div>
+      </div>
+      <div class="pillar reveal">
+        <span class="pillar-n">— 02</span>
+        <div><h3 class="pillar-title">降低行为切换成本</h3><p class="pillar-body">通过设计日常多场景可穿的服装系统，消除「需要换装才能亲近自然」的心理门槛，让自然接触自然地发生在每一个碎片时刻，而非被计划在周末。</p></div>
+      </div>
+      <div class="pillar reveal">
+        <span class="pillar-n">— 03</span>
+        <div><h3 class="pillar-title">克制即是力量</h3><p class="pillar-body">去除多余的装饰与功能堆叠，以最简洁的形式传达品质。NU 的克制不是缺失，而是让自然材质本身成为唯一的设计语言——无需多说，触感会自己表达。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <span class="footer-logo">NU</span>
+      <span class="footer-tagline">Urban Natural System · 每日接触，自然渗入</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#">品牌故事</a></li>
+      <li><a href="#">可持续</a></li>
+      <li><a href="#">尺码指南</a></li>
+      <li><a href="#">联系我们</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2024 NU. All rights reserved.</span>
+    <span class="footer-note">作品集项目 · Portfolio Project</span>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
